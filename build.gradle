@@ -1,0 +1,58 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'org.springframework.boot' version '2.1.0.RELEASE' apply false
+    id 'org.unbroken-dome.test-sets' version '2.0.2'
+}
+
+ext {
+    springCloudTaskVersion = '2.0.0.RELEASE'
+}
+
+allprojects {
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+//    apply plugin: 'org.unbroken-dome.test-sets'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    tasks.withType(JavaCompile) { options.encoding = "UTF-8" }
+
+    dependencyManagement {
+        imports {
+            mavenBom SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.springframework.cloud:spring-cloud-task-dependencies:${springCloudTaskVersion}"
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        mavenCentral()
+    }
+
+    testSets {
+        integrationTest { dirName = 'integration-test' }
+    }
+
+//    project.integrationTest {
+//        outputs.upToDateWhen { false }
+//    }
+
+    check.dependsOn integrationTest
+    integrationTest.mustRunAfter test
+
+    tasks.withType(Test) {
+        reports.html.destination = file("${reporting.baseDir}/${name}")
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.10.2'
+}

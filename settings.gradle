@@ -1,0 +1,5 @@
+rootProject.name = 'tendata-location'
+include 'tendata-location-core'
+include 'tendata-location-server'
+include 'tendata-location-rest'
+include 'tendata-location-task'

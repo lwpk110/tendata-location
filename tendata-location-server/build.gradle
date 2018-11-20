@@ -1,0 +1,18 @@
+apply plugin: 'org.springframework.boot'
+
+bootJar {
+    launchScript()
+    baseName = 'tendata-location-service'
+    version =  '0.1.0'
+}
+
+dependencies {
+    compile project(':tendata-location-core')
+    compile project(':tendata-location-rest')
+    compile project(':tendata-location-task')
+
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}

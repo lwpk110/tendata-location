@@ -1,0 +1,7 @@
+server:
+  port: 8889
+
+logging:
+  path: logs/
+  level:
+    root: info

@@ -1,0 +1,10 @@
+dependencies {
+
+    implementation "org.springframework:spring-aspects"
+    implementation "org.springframework:spring-context-support"
+    implementation "org.projectlombok:lombok"
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "org.springframework:spring-web"
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
