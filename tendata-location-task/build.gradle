@@ -1,7 +1,15 @@
-
 dependencies {
-    implementation('org.springframework.boot:spring-boot-starter')
-    implementation('org.springframework.cloud:spring-cloud-starter-task')
+    compile project(':tendata-location-core')
+
+    compile "org.springframework.batch:spring-batch-core"
+    compile "org.springframework.batch:spring-batch-integration"
+
+    implementation "org.springframework.integration:spring-integration-core"
+    implementation "org.springframework.integration:spring-integration-stream"
+    implementation('org.springframework.integration:spring-integration-core')
+    implementation('org.springframework.integration:spring-integration-jdbc')
+    implementation('org.springframework.integration:spring-integration-file')
+
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 

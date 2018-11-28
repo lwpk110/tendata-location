@@ -36,13 +36,6 @@ public class GlobalControllerExceptionHandler implements MessageSourceAware {
 
     private MessageSourceAccessor messages = DefaultMessageSource.getAccessor();
 
-    @ExceptionHandler({BasicErrorCodeException.class})
-    public ResponseEntity<?> handleUploadException(BasicErrorCodeException ex) throws IOException {
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        final String errMessage = messages.getMessage("error." + ex.getErrorCode(), ex.getMessage());
-        Response response = Response.fail(status,status.getReasonPhrase(),errMessage );
-        return new ResponseEntity<>(response,status);
-    }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
     public ResponseEntity<?> handleValidationException(Exception ex) {
