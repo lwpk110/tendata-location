@@ -1,11 +1,10 @@
 dependencies {
     implementation project(':tendata-location-core')
 
-
     implementation('org.springframework.boot:spring-boot-starter-web')
     implementation('org.springframework.boot:spring-boot-starter-webflux')
-    implementation "io.springfox:springfox-swagger2:${springfoxSwagger2Version}"
-    implementation "io.springfox:springfox-swagger-ui:${springfoxSwagger2Version}"
+    compile "io.springfox:springfox-swagger2:${springfoxSwagger2Version}"
+    compile "io.springfox:springfox-swagger-ui:${springfoxSwagger2Version}"
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
     testImplementation('io.projectreactor:reactor-test')

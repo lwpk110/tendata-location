@@ -1,26 +1,14 @@
-.gradle
-/build/
-!gradle/wrapper/gradle-wrapper.jar
-
-### STS ###
-.apt_generated
 .classpath
-.factorypath
+!/.project
 .project
 .settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
+target/
+.idea/
+.DS_Store
 .idea
-*.iws
+overlays/
+.gradle/
+build/
+bin/
 *.iml
-*.ipr
-/out/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
+*.log

@@ -5,3 +5,64 @@ logging:
   path: logs/
   level:
     root: info
+    org.springframework.cloud.task: DEBUG
+
+spring:
+  application:
+    name: ip-location-store
+  profiles.active: mysql,dev, elasticsearch
+  messages:
+   basename: cn/tendata/location/messages,cn/tendata/location/web/ValidationMessages
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 30
+      idle-timeout: 30000
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    open-in-view: true
+    show-sql: true
+    properties:
+      jadira.usertype.autoRegisterUserTypes: true
+  cloud:
+    task:
+      name:  db-ip.com_task
+      singleInstanceEnabled: true
+      batch:
+        failOnJobFailure: true
+  main:
+    allow-bean-definition-overriding: true
+  batch:
+    initialize-schema: ALWAYS
+    job:
+      enabled: false
+
+db-ip:
+  data:
+    input-directory: ${db-ip.data.input.directory:data/db-ip/input}
+    success-directory: ${db-ip.data.complete.directory:data/db-ip/success}
+    fail-directory: ${db-ip.data.fail.directory:data/db-ip/fail}
+    exception-data-params:
+    - ipStart: '::'
+      ipEnd: '1fff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'
+    - ipStart: '192.168.0.1'
+      ipEnd: '192.168.0.100'
+
+---
+spring:
+  profiles: mysql
+  datasource:
+    driver-class-name: ${datasource.driver-class-name:com.mysql.cj.jdbc.Driver}
+    url: ${datasource.url:jdbc:mysql://localhost:3306/ip_location_store?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC}
+    username: ${datasource.username:root}
+    password: ${datasource.password:root}
+---
+spring:
+  profiles: elasticsearch
+#  data:
+#    elasticsearch:
+#      cluster-name: docker-cluster
+#      cluster-nodes: 192.168.0.100:9302
+  elasticsearch:
+    rest:
+      uris: 192.168.1.110:9200

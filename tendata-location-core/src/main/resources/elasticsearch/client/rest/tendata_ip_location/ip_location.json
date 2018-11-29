@@ -1,0 +1,42 @@
+{
+  "ip_location": {
+    "properties": {
+      "continent": {
+        "index": false,
+        "type": "keyword"
+      },
+      "createdDate": {
+        "index": false,
+        "type": "date"
+      },
+      "province": {
+        "index": false,
+        "type": "keyword"
+      },
+      "city": {
+        "index": false,
+        "type": "keyword"
+      },
+      "lastModifiedDate": {
+        "index": false,
+        "type": "date"
+      },
+      "alpha2CountryCode": {
+        "index": false,
+        "type": "keyword"
+      },
+      "geoPoint": {
+        "type": "geo_point"
+      },
+      "ipCidr": {
+        "type": "ip_range"
+      },
+      "ipEnd": {
+        "type": "keyword"
+      },
+      "ipStart": {
+        "type": "keyword"
+      }
+    }
+  }
+}
