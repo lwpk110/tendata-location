@@ -34,7 +34,7 @@ public class IpLocationRepositoryImpl extends RestClientRepositoryImpl<IpLocatio
     }
 
     @Override
-    public void deleteByStartIpAndEndIp(String startIp, String endIp) throws IOException {
+    public void deleteByStartIpAndEndIp(String startIp, String endIp) {
         final String indexName = IpLocationItem.getIndexName();
         final QueryBuilder queryBuilder = QueryBuilders.boolQuery()
                 .must(QueryBuilders.termQuery("ipStart", startIp))

@@ -22,6 +22,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.BulkByScrollTask;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
+import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +30,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
+
+import static cn.tendata.location.data.elasticsearch.rest.repository.IpLocationOperationException
+        .ipHasMoreThanOneCidrException;
 
 public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEntity, ID extends Serializable> implements RestClientRepository<T, ID> {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -78,13 +82,17 @@ public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEn
     @SuppressWarnings("unchecked")
     public <S extends T> S search(SearchRequest request) throws IOException {
         final SearchResponse response = client.search(request, RequestOptions.DEFAULT);
-        final String sourceAsString = response.getHits().getAt(0).getSourceAsString();
+        final SearchHits hits = response.getHits();
+        if(hits.getTotalHits() > 1){
+            throw ipHasMoreThanOneCidrException(request.toString());
+        }
+        final String sourceAsString = hits.getAt(0).getSourceAsString();
         final T t = objectMapper.readValue(sourceAsString, clazz);
         return (S) t;
     }
 
     @Override
-    public void delete(DeleteByQueryRequest deleteRequest) throws IOException {
+    public void delete(DeleteByQueryRequest deleteRequest) {
         final ActionListener<BulkByScrollResponse> listener = new ActionListener<BulkByScrollResponse>() {
 
             @Override

@@ -33,7 +33,6 @@ public class IpLocationItem extends AbstractElasticsearchEntity {
         return IP_LOCATION_TYPE;
     }
 
-
     @Data
     public static class GeoPoint implements Serializable {
         private double lat;

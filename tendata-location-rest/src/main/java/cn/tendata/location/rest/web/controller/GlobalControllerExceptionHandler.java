@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Set;
 
 @ControllerAdvice(basePackageClasses = IpLocationController.class)
+@SuppressWarnings("unused")
 public class GlobalControllerExceptionHandler implements MessageSourceAware {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GlobalControllerExceptionHandler.class);
@@ -108,7 +109,7 @@ public class GlobalControllerExceptionHandler implements MessageSourceAware {
     public ResponseEntity<?> handleErrorCodeException(BasicErrorCodeException ex, HttpServletRequest request) throws IOException {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         logException(ex, request, status);
-        String message = messages.getMessage("error." + ex.getErrorCode(), ex.getMessage());
+        String message = messages.getMessage("error." + ex.getErrorCode(), ex.getErrorCode());
         Response response = Response.fail(status,ex.getErrorCode(),message);
         return new ResponseEntity<>(response,status);
     }

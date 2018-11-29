@@ -12,7 +12,7 @@ spring:
     name: ip-location-store
   profiles.active: mysql,dev, elasticsearch
   messages:
-   basename: cn/tendata/location/messages,cn/tendata/location/web/ValidationMessages
+   basename: cn/tendata/location/ExceptionMessage,cn/tendata/location/web/ValidationMessages
   datasource:
     hikari:
       minimum-idle: 5
