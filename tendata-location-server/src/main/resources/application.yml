@@ -42,6 +42,11 @@ db-ip:
     input-directory: ${db-ip.data.input.directory:data/db-ip/input}
     success-directory: ${db-ip.data.complete.directory:data/db-ip/success}
     fail-directory: ${db-ip.data.fail.directory:data/db-ip/fail}
+    exception-data-params:
+    - ipStart: '::'
+      ipEnd: '1fff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'
+    - ipStart: '192.168.0.1'
+      ipEnd: '192.168.0.100'
 
 ---
 spring:

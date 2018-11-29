@@ -5,12 +5,9 @@ import cn.tendata.location.service.IpLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -28,10 +25,18 @@ public class IpLocationController {
         this.ipLocationService = ipLocationService;
     }
 
-    @GetMapping(value = {"", "/"})
-    public ResponseEntity<IpLocationItem> location(@NotNull(message = "Param.ip.notBlank") @RequestParam String ip)
+    @GetMapping
+    public ResponseEntity<IpLocationItem> location(@NotBlank(message = "Param.ip.notBlank") @RequestParam String ip)
             throws IOException {
         final IpLocationItem location = ipLocationService.search(ip);
         return ok(location);
+    }
+
+    @DeleteMapping
+    public ResponseEntity delete(@NotBlank(message = "Param.startIp.notBlank") @RequestParam String startIp,
+                                 @NotBlank(message = "Param.endIp.notBlank") @RequestParam String endIp) throws
+            IOException {
+        ipLocationService.delete(startIp, endIp);
+        return ok().build();
     }
 }

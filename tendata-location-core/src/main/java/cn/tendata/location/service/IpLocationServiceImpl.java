@@ -18,4 +18,9 @@ public class IpLocationServiceImpl extends EntityServiceSupport<IpLocationItem, 
     public IpLocationItem search(String ip) throws IOException {
         return getRepository().findByIp(ip);
     }
+
+    @Override
+    public void delete(String startIp, String endIp) throws IOException {
+        getRepository().deleteByStartIpAndEndIp(startIp, endIp);
+    }
 }

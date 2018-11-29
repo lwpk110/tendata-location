@@ -7,13 +7,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
+import org.elasticsearch.action.admin.indices.refresh.RefreshResponse;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.BulkByScrollTask;
+import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,13 +60,11 @@ public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEn
             final Map map = mapper.convertValue(item, Map.class);
             request.add(new IndexRequest(index, type).source(map));
         }
-
         ActionListener<BulkResponse> listener = new ActionListener<BulkResponse>() {
             @Override
             public void onResponse(BulkResponse bulkItemResponses) {
 
             }
-
             @Override
             public void onFailure(Exception e) {
                 logger.warn("===> bulk index occur a exception:{}",e.getMessage(), e);
@@ -69,10 +75,36 @@ public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEn
 
 
     @Override
+    @SuppressWarnings("unchecked")
     public <S extends T> S search(SearchRequest request) throws IOException {
         final SearchResponse response = client.search(request, RequestOptions.DEFAULT);
         final String sourceAsString = response.getHits().getAt(0).getSourceAsString();
         final T t = objectMapper.readValue(sourceAsString, clazz);
         return (S) t;
+    }
+
+    @Override
+    public void delete(DeleteByQueryRequest deleteRequest) throws IOException {
+        final ActionListener<BulkByScrollResponse> listener = new ActionListener<BulkByScrollResponse>() {
+
+            @Override
+            public void onResponse(BulkByScrollResponse bulkByScrollResponse) {
+                logger.info("delete request:{},  delete Response:{}", deleteRequest, bulkByScrollResponse);
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                logger.info("delete request:{}, but delete failed", deleteRequest, e);
+            }
+        };
+        client.deleteByQueryAsync(deleteRequest, RequestOptions.DEFAULT, listener);
+    }
+
+    @Override
+
+    public void refresh() throws IOException {
+        RefreshRequest request = new RefreshRequest(index);
+        final RefreshResponse refreshResponse = client.indices().refresh(request, RequestOptions.DEFAULT);
+        logger.info("refresh request:{}, refresh response:{}", request, refreshResponse);
     }
 }
