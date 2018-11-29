@@ -1,7 +1,7 @@
 package cn.tendata.location.task.batch.item;
 
-import cn.tendata.location.client.rest.model.IpLocationItem;
-import cn.tendata.location.client.rest.repository.IpLocationRepository;
+import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
+import cn.tendata.location.data.elasticsearch.rest.repository.IpLocationRepository;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.lang.NonNull;
 

@@ -1,8 +1,6 @@
-package cn.tendata.location.client.rest;
+package cn.tendata.location.data.elasticsearch.rest;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class IpLocationRepositoryTest {
 

@@ -1,7 +1,7 @@
 package cn.tendata.location.task.batch.config;
 
-import cn.tendata.location.client.rest.model.IpLocationItem;
-import cn.tendata.location.client.rest.repository.IpLocationRepository;
+import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
+import cn.tendata.location.data.elasticsearch.rest.repository.IpLocationRepository;
 import cn.tendata.location.task.batch.GzipBufferedReaderFactory;
 import cn.tendata.location.task.batch.item.DbipItemProcessor;
 import cn.tendata.location.task.batch.item.IplocationItemWriter;

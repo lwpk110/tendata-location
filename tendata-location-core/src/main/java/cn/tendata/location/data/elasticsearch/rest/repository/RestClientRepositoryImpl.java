@@ -1,6 +1,7 @@
-package cn.tendata.location.client.rest.repository;
+package cn.tendata.location.data.elasticsearch.rest.repository;
 
-import cn.tendata.location.client.rest.model.AbstractElasticsearchEntity;
+import cn.tendata.location.data.elasticsearch.rest.model.AbstractElasticsearchEntity;
+import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -9,12 +10,16 @@ import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
 public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEntity, ID extends Serializable> implements RestClientRepository<T, ID> {
@@ -22,11 +27,16 @@ public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEn
     private final RestHighLevelClient client;
     private final String index;
     private final String type;
+    private final ObjectMapper objectMapper;
+    private Class<T> clazz;
 
-    protected RestClientRepositoryImpl(RestHighLevelClient client, String index, String type) {
+    @SuppressWarnings("unchecked")
+    protected RestClientRepositoryImpl(RestHighLevelClient client, String index, String type, ObjectMapper objectMapper) {
         this.client = client;
         this.index = index;
         this.type = type;
+        this.objectMapper = objectMapper;
+        this.clazz = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
 
@@ -57,4 +67,12 @@ public abstract class RestClientRepositoryImpl<T extends AbstractElasticsearchEn
         client.bulkAsync(request, RequestOptions.DEFAULT,listener);
     }
 
+
+    @Override
+    public <S extends T> S search(SearchRequest request) throws IOException {
+        final SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        final String sourceAsString = response.getHits().getAt(0).getSourceAsString();
+        final T t = objectMapper.readValue(sourceAsString, clazz);
+        return (S) t;
+    }
 }

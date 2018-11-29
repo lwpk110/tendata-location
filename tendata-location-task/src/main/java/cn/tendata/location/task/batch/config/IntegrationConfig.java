@@ -86,7 +86,7 @@ public class IntegrationConfig {
     }
 
     @Bean
-    public MessageToFileTransformer messageToFileTransformer(){
+    public MessageToFileTransformer messageToFileTransformer() {
         return new MessageToFileTransformer();
     }
 
@@ -95,19 +95,21 @@ public class IntegrationConfig {
     public IntegrationFlow jobCompleteFlow(@Value("${db-ip.data.success-directory}") String successBackDir,
                                            @Value("${db-ip.data.fail-directory}") String failBackDir) {
         return flow -> flow.channel("dbipJobCompletedChannel")
-                .log("==>job completed.........")
-                .routeToRecipients(recipientListRouterSpec -> {
-                    recipientListRouterSpec.recipientFlow("payload.status.toString().equals('COMPLETED')",
-                            successFlow ->
-                                    successFlow.enrichHeaders(headerEnricherSpec ->
-                                            headerEnricherSpec.header("back_dir", successBackDir))
-                                            .channel(FILE_BACK_CHANNEL_NAME));
-                    recipientListRouterSpec.recipientFlow("payload.status.toString().equals('COMPLETED')",
-                            failFlow ->
-                                    failFlow.enrichHeaders(headerEnricherSpec ->
-                                            headerEnricherSpec.header("back_dir", failBackDir))
-                                            .channel(FILE_BACK_CHANNEL_NAME)).defaultOutputChannel("nullChannel");
-                });
+                .log("==>job status monitor.........")
+                .routeToRecipients(recipientListRouterSpec ->
+                    recipientListRouterSpec
+                            .recipientFlow("payload.status.toString().equals('COMPLETED')",
+                                    successFlow ->
+                                            successFlow.enrichHeaders(headerEnricherSpec ->
+                                                    headerEnricherSpec.header("back_dir", successBackDir))
+                                                    .channel(FILE_BACK_CHANNEL_NAME))
+                            .recipientFlow("payload.status.toString().equals('FAILED')",
+                                    failFlow ->
+                                            failFlow.enrichHeaders(headerEnricherSpec ->
+                                                    headerEnricherSpec.header("back_dir", failBackDir))
+                                                    .channel(FILE_BACK_CHANNEL_NAME))
+                            .defaultOutputChannel("nullChannel")
+                );
     }
 
     @Bean

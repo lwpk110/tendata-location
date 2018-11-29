@@ -8,7 +8,7 @@ dependencies {
     compile "fr.pilato.spring:spring-elasticsearch:6.1"
 
     compile "org.projectlombok:lombok"
-//    compile 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+    //compile 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
     compile 'org.elasticsearch.client:elasticsearch-rest-high-level-client'
     compile "com.google.guava:guava:27.0-jre"
     compile "org.apache.commons:commons-lang3"

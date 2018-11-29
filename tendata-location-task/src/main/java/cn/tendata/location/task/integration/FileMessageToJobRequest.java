@@ -27,7 +27,6 @@ public class FileMessageToJobRequest {
     public JobLaunchRequest toRequest(Message<File> message) {
         JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
         jobParametersBuilder.addString(fileParameterName, message.getPayload().getAbsolutePath());
-        jobParametersBuilder.addString("dateTime", DateTime.now().toString());
         return new JobLaunchRequest(job, jobParametersBuilder.toJobParameters());
     }
 }

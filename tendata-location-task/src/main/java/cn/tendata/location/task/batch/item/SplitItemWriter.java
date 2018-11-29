@@ -1,6 +1,6 @@
 package cn.tendata.location.task.batch.item;
 
-import cn.tendata.location.client.rest.model.IpLocationItem;
+import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.batch.item.ItemWriter;
 

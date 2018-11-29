@@ -1,21 +1,18 @@
-/*
-package cn.tendata.location.data.elasticsearch.domain;
+package cn.tendata.location.data.elasticsearch.rest.model;
 
 import cn.tendata.location.core.jackson.DataView;
 import com.fasterxml.jackson.annotation.JsonView;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 
 
 public abstract class AbstractElasticsearchEntity implements Serializable {
+    private static final long serialVersionUID = 4399537692124496214L;
 
-    private static final long serialVersionUID = -7141570524683041372L;
 
     @JsonView(DataView.Basic.class)
-    @Id
     protected String id;
+
 
 
     public String getId() {
@@ -27,11 +24,9 @@ public abstract class AbstractElasticsearchEntity implements Serializable {
     }
 
 
-    @Transient
     public boolean isNew() {
         return null == getId();
     }
-
 
     @Override
     public String toString() {
@@ -71,4 +66,3 @@ public abstract class AbstractElasticsearchEntity implements Serializable {
     }
 }
 
-*/

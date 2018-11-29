@@ -1,7 +1,5 @@
-package cn.tendata.location.client.rest.model;
+package cn.tendata.location.data.elasticsearch.rest.model;
 
-import cn.tendata.location.client.rest.repository.IpLocationRepository;
-import cn.tendata.location.client.rest.repository.RestClientRepositoryImpl;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.joda.time.DateTime;
