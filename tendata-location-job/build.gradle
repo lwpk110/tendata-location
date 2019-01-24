@@ -1,0 +1,15 @@
+
+
+dependencies {
+    compile project(':tendata-location-core')
+
+    implementation('org.springframework.boot:spring-boot-starter-batch')
+//    implementation('org.springframework.cloud:spring-cloud-starter-task')
+    implementation "org.springframework.batch:spring-batch-core"
+    compile "org.springframework.batch:spring-batch-integration"
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.batch:spring-batch-test')
+}
+
+

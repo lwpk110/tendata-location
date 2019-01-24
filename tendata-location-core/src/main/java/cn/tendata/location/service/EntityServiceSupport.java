@@ -1,6 +1,6 @@
 package cn.tendata.location.service;
 
-import cn.tendata.location.data.elasticsearch.rest.model.AbstractElasticsearchEntity;
+import cn.tendata.location.data.elasticsearch.model.AbstractElasticsearchEntity;
 import cn.tendata.location.data.elasticsearch.rest.repository.RestClientRepository;
 
 import java.io.Serializable;

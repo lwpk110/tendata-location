@@ -1,7 +1,7 @@
 package cn.tendata.location.service;
 
-import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
-import cn.tendata.location.data.elasticsearch.rest.repository.IpLocationRepository;
+import cn.tendata.location.data.elasticsearch.model.IpLocationItem;
+import cn.tendata.location.data.elasticsearch.IpLocationRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

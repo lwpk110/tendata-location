@@ -20,19 +20,8 @@ public class IpUtils {
         IPAddressSeqRange range = startIpAddress.toSequentialRange(endIpAddress);
         IPAddress[] result = range.spanWithPrefixBlocks();
         return Arrays.stream(result).map(ipAddress -> {
-            final String cidr = ipAddress.toString();
-            return ignoreSingleIp(cidr, ipAddress);
+            final IPAddress address = ipAddress.assignMinPrefixForBlock();
+            return address.toString();
         }).collect(Collectors.toList());
-    }
-
-    private static String ignoreSingleIp(String cidr, IPAddress ipAddress) {
-        if (!cidr.contains("/")) {
-            if (ipAddress.isIPv4()) {
-                return cidr + "/32";
-            } else if (ipAddress.isIPv6()) {
-                return cidr + "/128";
-            }
-        }
-        return cidr;
     }
 }

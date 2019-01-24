@@ -1,0 +1,11 @@
+dependencies {
+    compile project(':tendata-location-job')
+
+    implementation "org.springframework.integration:spring-integration-core"
+    implementation "org.springframework.integration:spring-integration-stream"
+    implementation('org.springframework.integration:spring-integration-core')
+    implementation('org.springframework.integration:spring-integration-file')
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+

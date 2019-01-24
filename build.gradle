@@ -1,12 +1,13 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    id 'org.springframework.boot' version '2.1.0.RELEASE' apply false
+    id 'org.springframework.boot' version '2.0.8.RELEASE' apply false
     id 'org.unbroken-dome.test-sets' version '2.0.2'
 }
 
 ext {
     springCloudTaskVersion = '2.0.0.RELEASE'
+
 }
 
 allprojects {
@@ -51,6 +52,7 @@ subprojects {
     tasks.withType(Test) {
         reports.html.destination = file("${reporting.baseDir}/${name}")
     }
+
 }
 
 task wrapper(type: Wrapper) {

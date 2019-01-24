@@ -1,11 +1,12 @@
 package cn.tendata.location.rest.web.controller;
 
-import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
+import cn.tendata.location.data.elasticsearch.model.IpLocationItem;
 import cn.tendata.location.service.IpLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.constraints.NotBlank;
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class IpLocationController {
     }
 
     @DeleteMapping
+    @ApiIgnore
     public ResponseEntity delete(@NotBlank(message = "Param.startIp.notBlank") @RequestParam String startIp,
                                  @NotBlank(message = "Param.endIp.notBlank") @RequestParam String endIp) throws
             IOException {

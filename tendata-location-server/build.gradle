@@ -7,16 +7,15 @@ bootJar {
 }
 
 dependencies {
-    compile project(':tendata-location-core')
     compile project(':tendata-location-rest')
-    compile project(':tendata-location-task')
+    compile project(':tendata-location-integration')
 
     implementation('org.springframework.boot:spring-boot-starter')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-tomcat'
     implementation "mysql:mysql-connector-java"
+    implementation "org.hsqldb:hsqldb"
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 }

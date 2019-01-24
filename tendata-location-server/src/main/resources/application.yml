@@ -10,7 +10,7 @@ logging:
 spring:
   application:
     name: ip-location-store
-  profiles.active: mysql,dev, elasticsearch
+  profiles.active: dev, elasticsearch
   messages:
    basename: cn/tendata/location/ExceptionMessage,cn/tendata/location/web/ValidationMessages
   datasource:
@@ -30,6 +30,8 @@ spring:
       singleInstanceEnabled: true
       batch:
         failOnJobFailure: true
+      initialize:
+        enable: false
   main:
     allow-bean-definition-overriding: true
   batch:
@@ -45,8 +47,8 @@ db-ip:
     exception-data-params:
     - ipStart: '::'
       ipEnd: '1fff:ffff:ffff:ffff:ffff:ffff:ffff:ffff'
-    - ipStart: '192.168.0.1'
-      ipEnd: '192.168.0.100'
+#    - ipStart: '192.168.0.1'
+#      ipEnd: '192.168.0.100'
 
 ---
 spring:

@@ -32,7 +32,6 @@ public class IpUtilsTest {
         //66.43.71.1,66.43.71.255
         //77.220.115.0,77.220.116.64
         final List<String> cidrs = IpUtils.rangeToCIDR("77.220.115.0", "77.220.116.64");
-        Assertions.assertThat("[66.43.71.1/32, 66.43.71.2/31, 66.43.71.4/30, 66.43.71.8/29, 66.43.71.16/28, " +
-                "66.43.71.32/27, 66.43.71.64/26, 66.43.71.128/25]").isEqualTo(cidrs.toString());
+        Assertions.assertThat("[77.220.115.0/24, 77.220.116.0/26, 77.220.116.64/32]").isEqualTo(cidrs.toString());
     }
 }

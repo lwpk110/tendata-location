@@ -1,6 +1,6 @@
 package cn.tendata.location.service;
 
-import cn.tendata.location.data.elasticsearch.rest.model.IpLocationItem;
+import cn.tendata.location.data.elasticsearch.model.IpLocationItem;
 
 import java.io.IOException;
 
